@@ -1,53 +1,7 @@
 ﻿#ifndef OBSERVER_H
 #define OBSERVER_H
 
-#include <unordered_map>
-#include <functional>
 #include <iostream>
-
-class FunctionWrapper
-{
-public:
-    template<typename Func,typename Obj>
-    void getFuncAddress(Func&& func,Obj* obj)
-    {
-        std::cout<<func<<obj<<std::flush;
-    }
-private:
-    std::function<void()> func;
-    long long funcAddress;//函数地址
-    long long objAddress;//对象地址
-};
-
-struct FunctionHash
-{
-    template <typename T>
-    std::size_t operator()(const T& t) const
-    {
-        return std::hash<T>{}(t);
-    }
-};
-
-class Observer
-{
-public:
-    Observer();
-
-    void test()
-    {
-        std::function<void()> key = [](){
-            std::cout<<"key"<<std::flush;
-        };
-
-        std::function<void()> value = [](){
-            std::cout<<"value"<<std::flush;
-        };
-
-    }
-private:
-    std::unordered_multimap<std::function<void()>,std::function<void()>,FunctionHash> funcMap;
-};
-
 
 class Object
 {
@@ -142,4 +96,5 @@ private:
     std::string objName;
     unsigned dataLength;
 };
+
 #endif // OBSERVER_H
